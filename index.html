@@ -26,13 +26,14 @@
           preload: preload,
           create: create,
           update: update,
-        }
-      }
+        },
+      };
 
       var game = new Phaser.Game(config);
       var passarinho;
+
+      // função para pré carregar imagens e sprites usados no site
       function preload() {
-        //pré-carrregando as imagens e sprites
         this.load.image("bg", "assets/bg_space.png");
         this.load.spritesheet("bird", "assets/bird-purple.png", {
           frameWidth: 75,
@@ -40,59 +41,49 @@
         });
       }
 
+      // função para criar as imagens, sprites e animações no site
       function create() {
-        this.add.image(400, 300, "bg").setScale(1.2); // adicionado o fundo na tela do jogo
-        passarinho = this.add.sprite(100, 300, "bird").setScale(1.3); // adicionando passarinho na tela do jogo
+        //adicionando a imagem de fundo e sprite do pássaro
+        this.add.image(400, 300, "bg").setScale(1.2);
+        passarinho = this.add.sprite(100, 100, "bird").setScale(1.3);
+        //criando a animação do pássaro, indicando começo, fim, taxa de quadros e repetição (-1 = loop)
         this.anims.create({
-          //criando animação do passarinho
           key: "fly",
           frames: this.anims.generateFrameNumbers("bird", { start: 0, end: 7 }),
           frameRate: 10,
           repeat: -1,
         });
 
+        //tornando verdadeira (e consequentemente ativa) a animação do pássaro
         passarinho.anims.play("fly", true);
       }
 
-      // adicionando variáveis dos eixos X e Y.
-      var directionX = 1;
-      var directionY = 0.2;
+      // função para atualizar características dos objetos no site para, nesse caso, fazer o passaro se movimentar, de cima para baixo e esquerda para direita, de acordo com as regras implementadas abaixo
       function update() {
-        //AJUDA DO CHAT GPT, PERGUNTAR PARA PROF DE PROGRAMAÇÃO
-        //AJUDA DO CHAT GPT, PERGUNTAR PARA PROF DE PROGRAMAÇÃO
-        //AJUDA DO CHAT GPT, PERGUNTAR PARA PROF DE PROGRAMAÇÃO
-        //AJUDA DO CHAT GPT, PERGUNTAR PARA PROF DE PROGRAMAÇÃO
-
+        // condicionais de movimentação do pássaro no eixo X
         if (passarinho.x <= 100) {
-          // condicional do passarinho se mover para direita
-          directionX = 1; // Mudar a direção para a direita quando atingir a borda esquerda
-          passarinho.setFlip(false, false); // animação do passarinho para direita
+          passarinho.setFlip(false, false);
+          passarinho.idaX = true;
         } else if (passarinho.x >= 700) {
-          // inversão do movimento do passarinho
-          directionX = -1; // Mudar a direção para a esquerda quando atingir a borda direita
-          passarinho.setFlip(true, false); //animação do passarinho para a esquerda
+          passarinho.setFlip(true, false);
+          passarinho.idaX = false;
+        }
+        if (passarinho.idaX === true && passarinho.x < 700) {
+          passarinho.x += 4;
+        } else if (passarinho.idaX === false && passarinho.x > 100) {
+          passarinho.x -= 4;
         }
 
+        // condicionais de movimentação do pássaro no eixo Y
         if (passarinho.y <= 100) {
-          // condicional do passarinho vover para cima
-          directionY = 0.2; // Mudar a direção para baixo quando atingir a borda superior
+          passarinho.idaY = true;
         } else if (passarinho.y >= 500) {
-          //inversão do movimento do passarinho
-          directionY = -0.2; // Mudar a direção para cima quando atingir a borda inferior
+          passarinho.idaY = false;
         }
-
-        // Mover o passarinho de acordo com as direções X e Y usando um loop while, baseado nas variáveis direction X e Y.
-        var steps = 0;
-        while (
-          steps < 5 &&
-          (passarinho.x !== 100 ||
-            passarinho.x !== 700 ||
-            passarinho.y !== 100 ||
-            passarinho.y !== 500)
-        ) {
-          passarinho.x += directionX;
-          passarinho.y += directionY;
-          steps++;
+        if (passarinho.idaY === true && passarinho.y < 700) {
+          passarinho.y += 2;
+        } else if (passarinho.idaY === false && passarinho.y > 100) {
+          passarinho.y -= 2;
         }
       }
     </script>
