@@ -34,14 +34,14 @@
 
       // função para pré carregar imagens e sprites usados no site
       function preload() {
-        this.load.image("bg", "assets/bg_space.png");
-        this.load.spritesheet("bird", "assets/bird-purple.png", {
+        this.load.image("bg", "assets/bg_space.png"); //cénario
+        this.load.spritesheet("bird", "assets/bird-purple.png", { //sprite pássaro com dimensões
           frameWidth: 75,
           frameHeight: 75,
         });
       }
 
-      // função para criar as imagens, sprites e animações no site
+      //função para criar as imagens, sprites e animações no site
       function create() {
         //adicionando a imagem de fundo e sprite do pássaro
         this.add.image(400, 300, "bg").setScale(1.2);
@@ -60,7 +60,7 @@
 
       // função para atualizar características dos objetos no site para, nesse caso, fazer o pássaro se movimentar, de cima para baixo e esquerda para direita, de acordo com as regras implementadas abaixo
       function update() {
-        // condicionais de movimentação do pássaro no eixo X
+        // condicionais de movimentação do pássaro no eixo X e ajuste da direção da animação
         if (passarinho.x <= 100) {
           passarinho.setFlip(false, false);
           passarinho.idaX = true;
